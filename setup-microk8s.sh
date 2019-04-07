@@ -7,11 +7,12 @@ set -u  # fail on undeclared variables
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 # Useful routines in common.sh
 . "${SCRIPTS_DIR}/common.sh"
+CHANNEL=${CHANNEL:-1.14/stable}
 
 ensure_root
 
 # install kubernetes .. using current known working version
-snap install microk8s --classic --channel=1.13/stable
+snap install microk8s --classic --channel=${CHANNEL}
 # use the kubectl that matches the microk8s kubernetes version
 snap alias microk8s.kubectl kubectl
 # export the kubectl config file in case other tools rely on this
