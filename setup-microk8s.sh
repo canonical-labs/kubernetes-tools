@@ -7,7 +7,7 @@ set -u  # fail on undeclared variables
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 # Useful routines in common.sh
 . "${SCRIPTS_DIR}/common.sh"
-CHANNEL=${CHANNEL:-1.14/stable}
+CHANNEL=${CHANNEL:-1.15/stable}
 
 ensure_root
 
