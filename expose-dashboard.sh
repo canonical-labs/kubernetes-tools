@@ -58,6 +58,6 @@ EOF
 
 # Print the token that is needed to view the dashboard
 printf "\nTo access the kubernetes dashboard, go to:\n"
-printf "\n\t http://<EXTERNAL_IP>:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ \n"
+printf "\n\t http://<EXTERNAL_IP>:${PROXY_PORT}/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ \n"
 printf "\nCopy/paste this token into the kubernetes dashboard:\n"
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep microk8s-admin | awk '{print $1}') | grep token: | cut -d ":" -f 2 | xargs
