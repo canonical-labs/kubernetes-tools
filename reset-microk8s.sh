@@ -8,22 +8,13 @@ SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 # Useful routines in common.sh
 . "${SCRIPTS_DIR}/common.sh"
 
-CHANNEL=${CHANNEL:-1.15/stable}
-
 ensure_root
 
-# install kubernetes .. using current known working version
-snap install microk8s --classic --channel=${CHANNEL}
-# use the kubectl that matches the microk8s kubernetes version
-snap alias microk8s.kubectl kubectl
-# export the kubectl config file in case other tools rely on this
+# reset microk8s to state that microk8s just installed.
+microk8s.reset
 mkdir -p $HOME/.kube
 microk8s.kubectl config view --raw > $HOME/.kube/config
-echo "Waiting for kubernetes core services to be ready.."
 microk8s.status --wait-ready
-# enable common services
 microk8s.enable dns dashboard storage
-# This gets around an open issue with all-in-one installs
-iptables -P FORWARD ACCEPT
 
 ensure_pods_ready
