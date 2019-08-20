@@ -39,3 +39,10 @@ function ensure_binary() {
     exit_error "Please install ${2} and ensure it is on your path."
   fi
 }
+
+function ensure_pods_ready() {
+  until [[ `kubectl get pods -n=kube-system | grep -o 'ContainerCreating' | wc -l` == 0 ]] ; do
+    echo "Waiting for kubernetes addon service pods to be ready..  ("`kubectl get pods -n=kube-system | grep -o 'ContainerCreating' | wc -l`" not running)"
+    sleep 5
+  done
+}
